@@ -1,0 +1,74 @@
+<div @AfuerAdentro>
+
+  <form #formnew="ngForm" onsubmit="this.reset()">
+
+    <div class="row">
+      <div class="form-group col-md-4">
+        <label for="nombre">Nombre</label>
+
+        <input #nombre="ngModel" [(ngModel)]="nombreLetras" (keyup)="Verificar(nombre.value, precio.value, cantidad.value, detalle.value)"
+          type="text" class="form-control" placeholder="" name="nombre" minlength="8" required >
+
+        <div *ngIf="MostrarNombre" class="alert alert-danger">
+          Solo se digitan letras
+        </div>
+
+        <div *ngIf="nombre.touched && !nombre.valid">
+          <div *ngIf="nombre.errors?.required" class="alert alert-danger">
+            Nombre es requerido
+          </div>
+          <div class="alert alert-danger" *ngIf="nombre.errors?.minlength">
+            Debe digitar almenos 8 caracteres
+          </div>
+
+        </div>
+
+      </div>
+      <div class="form-group col-md-4">
+        <label for="precio">Precio</label>
+
+        <input #precio ngModel [Numeros]="precio.value" (Notnumber)="VerificarNumerosPrecio($event)" (keyup)="Verificar(nombre.value, precio.value, cantidad.value, detalle.value)"
+          type="text" class="form-control" placeholder="" name="precio" >
+
+        <div *ngIf="MostrarPrecio" class="alert alert-danger">
+          Por favor digite solo Numeros
+        </div>
+
+      </div>
+      <div class="form-group col-md-4">
+        <label for="cantidad">Cantidad</label>
+
+        <input #cantidad ngModel [Numeros]="cantidad.value" (Notnumber)="VerificarNumerosCantidad($event)" (keyup)="Verificar(nombre.value, precio.value, cantidad.value, detalle.value)"
+          type="text" class="form-control" placeholder="" name="cantidad" >
+
+        <div *ngIf="MostrarCantidad" class="alert alert-danger">
+          Por favor digite solo Numeros
+        </div>
+
+
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="form-group col-md-9">
+        <label for="detalle">Detalle</label>
+
+        <textarea #detalle (keyup)="Verificar(nombre.value, precio.value, cantidad.value, detalle.value)" class="form-control"
+          rows="2" placeholder="" name="detalle" ></textarea>
+
+      </div>
+      <div class="col-md-3">
+        <button (click)="CrearProducto(nombre, precio, cantidad, detalle)">Insertar Producto</button>
+      </div>
+
+    </div>
+
+  </form>
+
+
+  <div class="row">
+    <app-listar-productos *ngFor="let producto of Productos; index as i" [dato]="producto" [dato2]="i" class="col-md-4"></app-listar-productos>
+  </div>
+
+</div>
