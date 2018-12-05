@@ -30,7 +30,6 @@ export class NumerosDirective {
 
   ngOnInit() {
 
-
     if (this.Numeros == "") {
       return null
     } else {
